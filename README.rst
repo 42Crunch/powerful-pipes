@@ -40,4 +40,4 @@ Acknowledgements
 
 Special thanks to `Cesar Gallego <https://github.com/CesarGallego>`_ for his mentoring in data processing, that inspired this project.
 
-Project logo thanks to `Pipeline icons created by itim2101 - Flaticon <https://www.flaticon.com/free-icons/pipeline>`_
+Project logo thanks to `Pipe icons created by srip - Flaticon <https://www.flaticon.com/free-icons/pipe>`_
