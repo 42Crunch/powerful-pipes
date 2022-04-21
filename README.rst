@@ -6,7 +6,7 @@ Powerful Pipes - The power of UNIX Pipes
    :target: https://github.com/42crunch/powerful-pipes/blob/main/LICENSE
    :alt: License
 
-.. image:: https://img.shields.io/pypi/pyversions/poweful-pipes
+.. image:: https://img.shields.io/badge/Python-3.8%20%7C%203.9%20%7C%203.10-blue
    :alt: Python Versions
 
 .. figure:: https://github.com/42crunch/powerful-pipes/blob/main/docs/logo-250x250.png
@@ -40,4 +40,4 @@ Acknowledgements
 
 Special thanks to `Cesar Gallego <https://github.com/CesarGallego>`_ for his mentoring in data processing, that inspired this project.
 
-Project logo thanks to <a href="https://www.flaticon.com/free-icons/pipeline" title="pipeline icons">Pipeline icons created by itim2101 - Flaticon</a>
+Project logo thanks to `Pipeline icons created by itim2101 - Flaticon <https://www.flaticon.com/free-icons/pipeline>`_
