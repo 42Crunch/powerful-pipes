@@ -8,7 +8,7 @@ except ImportError:
 
     JSON_LIBRARY = "json"
 
-from .typing import JSONObject, JSONArray
+from .typing import JSON
 
 def dump_json(obj: dict or list) -> str:
     """Dumps json using most efficient JSON library available"""
@@ -19,7 +19,7 @@ def dump_json(obj: dict or list) -> str:
 
     return dump_text
 
-def read_json(data: str or bytes) -> JSONObject or JSONArray:
+def read_json(data: str or bytes) -> JSON:
     """Reads json using most efficient JSON library available"""
     if JSON_LIBRARY != "orjson" and hasattr(data, "decode"):
         data = data.decode()

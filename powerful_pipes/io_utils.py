@@ -3,7 +3,7 @@ import select
 
 from typing import Iterable, Tuple
 
-from .typing import JSONObject, JSONArray
+from .typing import JSON
 from .exceptions import NotConnectedToPipe
 from .json_utils import read_json, dump_json
 
@@ -48,7 +48,7 @@ def read_stdin_lines(read_timeout: int = 0) -> Iterable[str]:
             yield is_stdout_pipe, line
 
 
-def read_json_from_stdin() -> Iterable[Tuple[bool, JSONObject]]:
+def read_json_from_stdin() -> Iterable[Tuple[bool, JSON]]:
     # Read from the STDIN PIPE
     for _, line in read_stdin_lines():
 
@@ -61,13 +61,13 @@ def read_json_from_stdin() -> Iterable[Tuple[bool, JSONObject]]:
 
 
 def write_json_to_stdout(
-    data: JSONObject or JSONArray,
+    data: JSON,
     force_flush: bool = False
 ):
     write_to_stdout(dump_json(data), force_flush=force_flush)
 
 
-def write_json_to_stderr(data: JSONObject or JSONArray):
+def write_json_to_stderr(data: JSON):
     write_to_stderr(dump_json(data))
 
 
@@ -84,7 +84,7 @@ def write_to_stdout(data: str, force_flush: bool = False):
     if force_flush:
         try:
             sys.stdout.flush()
-        except BrokenPipeError as e:
+        except BrokenPipeError:
             ...
 
 
@@ -93,7 +93,7 @@ def write_to_stderr(data: str):
 
     try:
         sys.stderr.flush()
-    except BrokenPipeError as e:
+    except BrokenPipeError:
         ...
 
 

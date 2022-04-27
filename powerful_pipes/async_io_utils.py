@@ -5,7 +5,7 @@ from typing import Iterable, Tuple
 
 from aioconsole import ainput, aprint, get_standard_streams
 
-from .typing import JSONObject, JSONArray
+from .typing import JSON
 from .exceptions import NotConnectedToPipe
 from .json_utils import read_json, dump_json
 
@@ -40,7 +40,7 @@ async def async_read_stdin_lines(read_timeout: int = 0) -> Iterable[str]:
             return
 
 
-async def async_read_json_from_stdin() -> Tuple[bool, JSONObject or JSONArray]:
+async def async_read_json_from_stdin() -> Tuple[bool, JSON]:
     # Read from the STDIN PIPE
     async for has_stdout_pipe, json_line in async_read_stdin_lines():
         try:
@@ -51,13 +51,13 @@ async def async_read_json_from_stdin() -> Tuple[bool, JSONObject or JSONArray]:
 
 
 async def async_write_json_to_stdout(
-        data: JSONObject or JSONArray,
+        data: JSON,
         force_flush: bool = False
 ):
     await async_write_to_stdout(dump_json(data), force_flush=force_flush)
 
 
-async def async_write_json_to_stderr(data: JSONObject or JSONArray):
+async def async_write_json_to_stderr(data: JSON):
     await async_write_to_stderr(dump_json(data))
 
 

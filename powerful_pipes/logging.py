@@ -1,4 +1,4 @@
-from .typing import JSONObject, JSONArray
+from .typing import JSON
 from .io_utils import write_json_to_stderr
 from .async_io_utils import async_write_json_to_stderr
 
@@ -13,7 +13,7 @@ class REPORT_LEVEL:
 
 
 def _make_report_(
-        original_data: JSONObject,
+        original_data: JSON,
         log_level: int = REPORT_LEVEL.INFO,
         data: dict = None,
         message: str = None
@@ -39,9 +39,9 @@ def _make_report_(
 
 
 def report(
-        original_data: JSONObject = None,
+        original_data: JSON = None,
         log_level: int = REPORT_LEVEL.INFO,
-        data: JSONObject or JSONArray = None,
+        data: JSON = None,
         message: str = None
 ):
     write_json_to_stderr(_make_report_(
@@ -56,7 +56,7 @@ def eprint(message: str):
 
 
 def report_exception(
-        original_data: JSONObject,
+        original_data: JSON,
         exception: Exception,
         message: str = None
 ):
@@ -71,7 +71,7 @@ def report_exception(
 
 
 async def async_report_exception(
-        original_data: JSONObject or None,
+        original_data: JSON or None,
         exception: Exception,
         message: str = None
 ):
