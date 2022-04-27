@@ -12,7 +12,7 @@ Powerful Pipes - The power of UNIX Pipes
 .. figure:: https://github.com/42crunch/powerful-pipes/blob/main/docs/logo-250x250.png
    :align: center
 
-In a nutshell ``Powerful Pipes`` is a library for work with UNIX Pipes.
+In a nutshell ``Powerful Pipes`` is a library for working with UNIX Pipes.
 
 Documentation
 -------------
@@ -22,7 +22,10 @@ You can find the complete documentation at: `Documentation <https://powerful-pip
 Authors
 -------
 
-Powerful Pipes was made by 42Crunch Research Team.
+Powerful Pipes was made by 42Crunch Research Team:
+
+- `jc42 <https://github.com/jc42c>`_
+- `cr0hn <https://github.com/cr0hn>`_
 
 
 License
