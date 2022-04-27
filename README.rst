@@ -9,7 +9,7 @@ Powerful Pipes - The power of UNIX Pipes
 .. image:: https://img.shields.io/badge/Python-3.8%20%7C%203.9%20%7C%203.10-blue
    :alt: Python Versions
 
-.. figure:: https://github.com/42crunch/powerful-pipes/blob/main/docs/logo-250x250.png
+.. figure:: https://raw.githubusercontent.com/42Crunch/powerful-pipes/main/docs/logo-250x250.png
    :align: center
 
 In a nutshell ``Powerful Pipes`` is a library for working with UNIX Pipes.
