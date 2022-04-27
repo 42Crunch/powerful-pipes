@@ -29,13 +29,17 @@ def _make_report_(
     if data:
         report["data"] = data
 
-    original_data.setdefault("_meta", {}).setdefault("reporting", report)
+    if not original_data:
+        original_data = {"_meta": {"reporting": report}}
+
+    else:
+        original_data.setdefault("_meta", {}).setdefault("reporting", report)
 
     return original_data
 
 
 def report(
-        original_data: JSONObject,
+        original_data: JSONObject = None,
         log_level: int = REPORT_LEVEL.INFO,
         data: JSONObject or JSONArray = None,
         message: str = None
@@ -46,6 +50,9 @@ def report(
         data,
         message
     ))
+
+def eprint(message: str):
+    report(message=message, log_level=REPORT_LEVEL.INFO)
 
 
 def report_exception(
@@ -79,4 +86,6 @@ async def async_report_exception(
 
 
 __all__ = (
-    "report", "REPORT_LEVEL", "report_exception", "async_report_exception")
+    "report", "REPORT_LEVEL", "report_exception", "async_report_exception",
+    "eprint"
+)

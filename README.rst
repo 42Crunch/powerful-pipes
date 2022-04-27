@@ -14,6 +14,54 @@ Powerful Pipes - The power of UNIX Pipes
 
 In a nutshell ``Powerful Pipes`` is a library for working with UNIX Pipes.
 
+Install
+-------
+
+.. code-block:: bash
+
+    > pip install powerful-pipes
+
+Quick Start
+-----------
+
+Create a CLI tool that reads from the JSON from stdin and dumps to the stdout, after processing input data:
+
+.. code-block:: python
+
+    # File: pipe-example.py
+    from powerful_pipes import read_json_from_stdin, eprint, write_json_to_stdout
+
+    for error, input_json in read_json_from_stdin():
+
+        if error:
+            # Here you can manager the error. Most common error is that the
+            # input is not a valid json.
+            # eprint(...) function dumps the error message to the stderr
+            eprint(message="Error processing input from stdin")
+            continue
+
+        try:
+            input_json["myData"] = "data 1"
+
+        except Exception as e:
+            report_exception(input_json, e)
+
+        finally:
+            # THIS STEP IS CRITICAL. If you don't put again in the stdout the
+            # input data, following tools in the pipe chain wouldn't receive
+            # the data
+            write_json_to_stdout(input_json)
+
+Using in CLI:
+
+.. code-block:: bash
+
+    > echo '{}' | python pipe-example.py | jq
+    {
+        "myData": "data 1"
+    }
+
+
 Documentation
 -------------
 
