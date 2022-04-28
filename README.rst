@@ -5,7 +5,8 @@ Powerful Pipes - The power of UNIX Pipes
 .. image:: https://img.shields.io/badge/License-Apache2-SUCCESS
    :target: https://github.com/42crunch/powerful-pipes/blob/main/LICENSE
    :alt: License
-
+.. image:: https://img.shields.io/pypi/v/powerful-pipes
+   :alt: PyPI
 .. image:: https://img.shields.io/badge/Python-3.8%20%7C%203.9%20%7C%203.10-blue
    :alt: Python Versions
 
