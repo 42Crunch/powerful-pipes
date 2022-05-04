@@ -80,12 +80,12 @@ Powerful Pipes was made by 42Crunch Research Team:
 License
 -------
 
-Powerful Pipes is Open Source and available under the `Apache 2 <https://github.com/42c-presales/openapi-generator/blob/main/LICENSE>`_.
+Powerful Pipes is Open Source and available under the `Apache 2 <https://github.com/42crunch/powerful-pipes/blob/main/LICENSE>`_.
 
 Contributions
 -------------
 
-Contributions are very welcome. See `CONTRIBUTING.md <https://github.com/42c-presales/openapi-generator/blob/main/CONTRIBUTING.md>`_ or skim existing tickets to see where you could help out.
+Contributions are very welcome. See `CONTRIBUTING.md <https://github.com/42crunch/powerful-pipes/blob/main/CONTRIBUTING.md>`_ or skim existing tickets to see where you could help out.
 
 Acknowledgements
 ----------------
