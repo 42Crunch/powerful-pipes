@@ -74,7 +74,7 @@ def write_json_to_stderr(data: JSON):
 def write_to_stdout(data: str, force_flush: bool = False):
     try:
         sys.stdout.write(f"{data}\n")
-    except BrokenPipeError:
+    except BrokenPipeError as e:
         print(
             f"[ERROR] when try to write data '{data}' in pipe",
             file=sys.stderr,

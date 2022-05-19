@@ -64,9 +64,9 @@ async def async_write_json_to_stderr(data: JSON):
 async def async_write_to_stdout(data: str, force_flush: bool = False):
     try:
         await aprint(data, flush=force_flush)
-    except BrokenPipeError:
+    except BrokenPipeError as e:
         print(
-            f"[ERROR] when try to write data '{data}' in pipe",
+            f"[ERROR] when try to write data '{data}' in pipe: {e}",
             file=sys.stderr,
             flush=True
         )
