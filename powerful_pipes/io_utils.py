@@ -62,7 +62,7 @@ def read_json_from_stdin() -> Iterable[Tuple[bool, JSON]]:
 
 def write_json_to_stdout(
     data: JSON,
-    force_flush: bool = False
+    force_flush: bool = True
 ):
     write_to_stdout(dump_json(data), force_flush=force_flush)
 
@@ -71,7 +71,7 @@ def write_json_to_stderr(data: JSON):
     write_to_stderr(dump_json(data))
 
 
-def write_to_stdout(data: str, force_flush: bool = False):
+def write_to_stdout(data: str, force_flush: bool = True):
     try:
         sys.stdout.write(f"{data}\n")
     except BrokenPipeError as e:

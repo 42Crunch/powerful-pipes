@@ -52,7 +52,7 @@ async def async_read_json_from_stdin() -> Tuple[bool, JSON]:
 
 async def async_write_json_to_stdout(
         data: JSON,
-        force_flush: bool = False
+        force_flush: bool = True
 ):
     await async_write_to_stdout(dump_json(data), force_flush=force_flush)
 
@@ -61,7 +61,7 @@ async def async_write_json_to_stderr(data: JSON):
     await async_write_to_stderr(dump_json(data))
 
 
-async def async_write_to_stdout(data: str, force_flush: bool = False):
+async def async_write_to_stdout(data: str, force_flush: bool = True):
     try:
         await aprint(data, flush=force_flush)
     except BrokenPipeError as e:
