@@ -1,3 +1,7 @@
+import sys
+import time
+import traceback
+
 from .typing import JSON
 from .io_utils import write_json_to_stderr
 from .async_io_utils import async_write_json_to_stderr
@@ -19,15 +23,36 @@ def _make_report_(
         message: str = None
 ) -> dict:
 
-    report = {
-        "logLevel": log_level
+    binary_report = {
+        "logLevel": log_level,
+        "commandLine": " ".join(sys.argv),
+        "epoch": time.time(),
     }
 
+    exc_type, exc_obj, exc_tb = sys.exc_info()
+
+    if exc_type:
+        exc = {
+            "exceptionName": exc_type.__name__,
+            "exceptionMessage": str(exc_obj),
+            "binary": exc_tb.tb_frame.f_code.co_filename,
+            "stackTrace": "\n".join(traceback.format_tb(exc_tb))
+        }
+
+        if user_exc := data.get("exception", None):
+            exc["userException"] = str(user_exc)
+
+        binary_report["exceptionDetails"] = exc
+
     if message:
-        report["message"] = message
+        binary_report["message"] = message
 
     if data:
-        report["data"] = data
+        binary_report["data"] = data
+
+    report = {
+        sys.argv[0]: binary_report
+    }
 
     if not original_data:
         original_data = {"_meta": {"reporting": report}}
@@ -64,7 +89,7 @@ def report_exception(
         original_data,
         log_level=REPORT_LEVEL.EXCEPTION,
         data={
-            "exceptionDetails": str(exception)
+            "exception": str(exception)
         },
         message=message
     ))
