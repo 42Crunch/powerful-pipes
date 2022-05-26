@@ -39,8 +39,9 @@ def _make_report_(
             "stackTrace": "\n".join(traceback.format_tb(exc_tb))
         }
 
-        if user_exc := data.get("exception", None):
-            exc["userException"] = str(user_exc)
+        if data:
+            if user_exc := data.get("exception", None):
+                exc["userException"] = str(user_exc)
 
         binary_report["exceptionDetails"] = exc
 
