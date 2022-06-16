@@ -20,7 +20,8 @@ def _make_report_(
         original_data: JSON,
         log_level: int = REPORT_LEVEL.INFO,
         data: dict = None,
-        message: str = None
+        message: str = None,
+        stack_trace: bool = True
 ) -> dict:
 
     binary_report = {
@@ -29,21 +30,22 @@ def _make_report_(
         "epoch": time.time(),
     }
 
-    exc_type, exc_obj, exc_tb = sys.exc_info()
+    if stack_trace:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
 
-    if exc_type:
-        exc = {
-            "exceptionName": exc_type.__name__,
-            "exceptionMessage": str(exc_obj),
-            "binary": exc_tb.tb_frame.f_code.co_filename,
-            "stackTrace": "\n".join(traceback.format_tb(exc_tb))
-        }
+        if exc_type:
+            exc = {
+                "exceptionName": exc_type.__name__,
+                "exceptionMessage": str(exc_obj),
+                "binary": exc_tb.tb_frame.f_code.co_filename,
+                "stackTrace": "\n".join(traceback.format_tb(exc_tb))
+            }
 
-        if data:
-            if user_exc := data.get("exception", None):
-                exc["userException"] = str(user_exc)
+            if data:
+                if user_exc := data.get("exception", None):
+                    exc["userException"] = str(user_exc)
 
-        binary_report["exceptionDetails"] = exc
+            binary_report["exceptionDetails"] = exc
 
     if message:
         binary_report["message"] = message
@@ -68,17 +70,19 @@ def report(
         original_data: JSON = None,
         log_level: int = REPORT_LEVEL.INFO,
         data: JSON = None,
-        message: str = None
+        message: str = None,
+        stack_trace: bool = True
 ):
     write_json_to_stderr(_make_report_(
         original_data,
         log_level,
         data,
-        message
+        message,
+        stack_trace
     ))
 
 def eprint(message: str):
-    report(message=message, log_level=REPORT_LEVEL.INFO)
+    report(message=message, log_level=REPORT_LEVEL.INFO, stack_trace=False)
 
 
 def report_exception(
