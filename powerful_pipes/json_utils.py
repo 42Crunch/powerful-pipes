@@ -1,4 +1,5 @@
 try:
+    import json as js
     import orjson as json
 
     JSON_LIBRARY = "orjson"
@@ -12,7 +13,12 @@ from .typing import JSON
 
 def dump_json(obj: dict or list) -> str:
     """Dumps json using most efficient JSON library available"""
-    dump_text = json.dumps(obj)
+    try:
+        dump_text = json.dumps(obj)
+    except TypeError:
+        global JSON_LIBRARY
+        JSON_LIBRARY = "json"
+        dump_text = js.dumps(obj)
 
     if JSON_LIBRARY == "orjson":
         dump_text = dump_text.decode()
