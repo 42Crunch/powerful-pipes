@@ -3,6 +3,9 @@ import builtins
 
 from typing import Iterable, Tuple
 
+import aiofiles.os
+import aiofiles.tempfile
+
 from aioconsole import ainput, aprint, get_standard_streams
 
 from .typing import JSON
@@ -82,7 +85,42 @@ async def async_write_to_stderr(data: str):
     writer.write(f"{data}\n")
     await writer.drain()
 
+async def async_read_from_stdin_by_file_ref(auto_delete: bool = True) -> Iterable[Tuple[bool, JSON]]:
+    async for has_stdout_pipe, line in async_read_stdin_lines():
+
+        # noinspection PyBroadException
+        try:
+            file_path = line.strip()
+
+            async with aiofiles.open(file_path, mode='r') as f:
+                file_content = await f.read()
+
+            if auto_delete:
+                await aiofiles.os.remove(file_path)
+
+            yield False, read_json(file_content)
+
+        except IOError:
+            yield True, None
+
+        except:
+            yield True, line
+
+async def async_write_to_stdout_by_file_ref(
+    data: JSON,
+    force_flush: bool = True,
+    file_prefix: str = "pwp-",
+):
+    async with aiofiles.tempfile.NamedTemporaryFile(prefix=file_prefix) as f:
+        name = f.name
+
+    async with aiofiles.open(name, mode='w') as f:
+        await f.write(dump_json(data))
+        await f.flush()
+
+    await async_write_to_stdout(name, force_flush=force_flush)
 
 __all__ = ("async_read_stdin_lines", "async_read_json_from_stdin",
            "async_write_json_to_stdout", "async_write_json_to_stderr",
-           "async_write_to_stdout", "async_write_to_stderr")
+           "async_write_to_stdout", "async_write_to_stderr",
+           "async_write_to_stdout_by_file_ref", "async_read_from_stdin_by_file_ref")

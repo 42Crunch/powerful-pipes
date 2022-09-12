@@ -1,4 +1,4 @@
-include README.rst VERSION requirements.txt
+include README.rst CHANGELOG.rst VERSION requirements.txt
 
 recursive-exclude * __pycache__
 recursive-exclude * *.pyc
