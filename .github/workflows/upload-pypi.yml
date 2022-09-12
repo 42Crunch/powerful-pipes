@@ -9,6 +9,7 @@ on:
       - powerful_pipes/**
       - VERSION
       - setup*
+      - README.rst
 
 jobs:
 

@@ -77,7 +77,7 @@ def write_to_stderr(data: str):
         ...
 
 
-def read_json_from_stdin() -> Iterable[Tuple[bool, JSON]]:
+def read_json_from_stdin() -> Iterable[Tuple[Exception, JSON]]:
     # Read from the STDIN PIPE
     for _, line in read_stdin_lines():
 
@@ -100,7 +100,7 @@ def write_json_to_stdout(
 def write_json_to_stderr(data: JSON):
     write_to_stderr(dump_json(data))
 
-def read_from_stdin_by_file_ref(auto_delete: bool = True) -> Iterable[Tuple[bool, JSON]]:
+def read_from_stdin_by_file_ref(auto_delete: bool = True) -> Iterable[Tuple[Exception, JSON]]:
     """
     Reads file references from stdin. Load file content and return the tuple:
 
