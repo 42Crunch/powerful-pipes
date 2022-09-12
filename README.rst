@@ -98,7 +98,7 @@ It stores the data in a temporary file and passes the file reference to the next
 Changelog
 ---------
 
-.. include:: CHANGELOG.rst
+You can check `Changelog <https://github.com/42crunch/powerful-pipes/blob/main/CHANGELOG.rst>`_.
 
 Documentation
 -------------
