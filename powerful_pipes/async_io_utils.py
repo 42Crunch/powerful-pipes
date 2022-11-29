@@ -1,7 +1,7 @@
 import sys
 import builtins
 
-from typing import Iterable, Tuple
+from typing import Iterable, Tuple, AsyncGenerator
 
 import aiofiles.os
 import aiofiles.tempfile
@@ -11,6 +11,7 @@ from aioconsole import ainput, aprint, get_standard_streams
 from .typing import JSON
 from .exceptions import NotConnectedToPipe
 from .json_utils import read_json, dump_json
+from .json_schema import validate_json_schema
 
 
 async def async_read_stdin_lines(read_timeout: int = 0) -> Iterable[str]:
@@ -120,7 +121,23 @@ async def async_write_to_stdout_by_file_ref(
 
     await async_write_to_stdout(name, force_flush=force_flush)
 
+
+# ------------------------------------------------------------------------------------------------------------------
+# Read and validate
+# ------------------------------------------------------------------------------------------------------------------
+async def async_read_and_validate_stdin(json_schema: dict) -> AsyncGenerator[dict, None]:
+    async for error, json_message in async_read_json_from_stdin():
+        if error:
+            continue
+
+        if json_schema and not validate_json_schema(json_message, json_schema):
+                continue
+
+        yield json_message
+
+
 __all__ = ("async_read_stdin_lines", "async_read_json_from_stdin",
            "async_write_json_to_stdout", "async_write_json_to_stderr",
            "async_write_to_stdout", "async_write_to_stderr",
-           "async_write_to_stdout_by_file_ref", "async_read_from_stdin_by_file_ref")
+           "async_write_to_stdout_by_file_ref", "async_read_from_stdin_by_file_ref",
+           "async_read_and_validate_stdin")

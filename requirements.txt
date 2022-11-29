@@ -1,3 +1,4 @@
 orjson
 aiofiles
 aioconsole
+jsonschema-rs

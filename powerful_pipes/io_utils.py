@@ -3,11 +3,12 @@ import sys
 import select
 import tempfile
 
-from typing import Iterable, Tuple
+from typing import Iterable, Tuple, Generator
 
 from .typing import JSON
 from .exceptions import NotConnectedToPipe
 from .json_utils import read_json, dump_json
+from .json_schema import validate_json_schema
 
 
 def read_stdin_lines(read_timeout: int = 0) -> Iterable[str]:
@@ -137,6 +138,18 @@ def write_to_stdout_by_file_ref(
 
     write_to_stdout(name, force_flush=force_flush)
 
+
+def read_and_validate_stdin(json_schema: dict) -> Generator[dict, None, None]:
+    for error, json_message in read_json_from_stdin():
+        if error:
+            continue
+
+        if json_schema and not validate_json_schema(json_message, json_schema):
+            continue
+
+        yield json_message
+
 __all__ = ("read_json_from_stdin", "write_json_to_stdout", "write_to_stdout",
            "write_to_stderr", "write_json_to_stderr",
-           "read_stdin_lines", "read_from_stdin_by_file_ref", "write_to_stdout_by_file_ref")
+           "read_stdin_lines", "read_from_stdin_by_file_ref", "write_to_stdout_by_file_ref",
+           "read_and_validate_stdin")

@@ -1,41 +1,38 @@
-import json
+from .typing import JSON
 
 try:
     import orjson
-except ImportError:
-    ...
 
-from .typing import JSON
+    def read_json(data: str or bytes) -> JSON:
+        """Reads json using most efficient JSON library available"""
+        return orjson.loads(data)
 
-def dump_json(obj: dict or list) -> str:
-    """Dumps json using most efficient JSON library available"""
-    try:
-        json_lib = globals()["orjson"]
-    except KeyError:
-        json_lib = json
 
-    try:
-        dump_text = json_lib.dumps(obj)
-    except TypeError as e:
-        if "Dict" in str(e):
+    def dump_json(obj: dict or list, indent: bool = False) -> str:
+        """Dumps json using most efficient JSON library available"""
+
+        try:
+            if indent:
+                dump_text = orjson.dumps(obj, option=orjson.OPT_INDENT_2)
+            else:
+                dump_text = orjson.dumps(obj)
+        except TypeError:
             # See: https://github.com/ijl/orjson#opt_non_str_keys
-            dump_text = json_lib.dumps(obj, option=orjson.OPT_NON_STR_KEYS)
-        else:
-            dump_text = json.dumps(obj)
+            dump_text = orjson.dumps(obj, option=orjson.OPT_NON_STR_KEYS)
 
-    if hasattr(dump_text, "decode"):
-        dump_text = dump_text.decode()
+        return dump_text.decode()
 
-    return dump_text
+except ImportError:
+    import json
 
-def read_json(data: str or bytes) -> JSON:
-    """Reads json using most efficient JSON library available"""
-    try:
-        json_lib = globals()["orjson"]
-    except KeyError:
-        json_lib = json
+    def read_json(data: str or bytes) -> JSON:
+        """Reads json using most efficient JSON library available"""
+        return json.loads(data)
 
-    return json_lib.loads(data)
+
+    def dump_json(obj: dict or list, indent: bool = False) -> str:
+        """Dumps json using most efficient JSON library available"""
+        return json.dumps(obj, indent=2 if indent else None)
 
 
 __all__ = ("dump_json", "read_json")
